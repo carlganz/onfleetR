@@ -1,4 +1,4 @@
-#' @import httr jsonlite purrr dplyr
+#' @import httr jsonlite purrr dplyr shiny
 onfleet_call <-
   function(type = c("GET", "POST", "PUT", "DELETE"),
            endpoint = c("auth/test", "organization", "organizations", "admins", "workers", "hubs", "teams", "destinations", "recipients", "tasks", "containers", "webhooks", "tasks/all"),
