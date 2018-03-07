@@ -7,7 +7,7 @@
 \usage{
 onfleet_put_insert_tasks(containerType, entityId, index, tasks)
 
-onfleet_put_container(tasks)
+onfleet_put_container(containerType, entityId, tasks)
 }
 \description{
 Manage Containers

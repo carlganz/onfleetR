@@ -21,8 +21,8 @@ onfleet_post_workers <- function(name, phone, teams, vehicleType = NULL, vehicle
 
 #' @rdname onfleet_post_workers
 #' @export
-onfleet_get_workers <- function() {
-  onfleet_call("GET", "workers") %>% {
+onfleet_get_workers <- function(states) {
+  onfleet_call("GET", "workers", query = if (isTruthy(states)) list(states = paste0(states, collapse = ","))) %>% {
     data.frame(
       id = map_chr(., "id"),
       name = map_chr(.,"name"),

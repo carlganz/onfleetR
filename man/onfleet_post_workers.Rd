@@ -15,7 +15,7 @@ onfleet_post_workers(name, phone, teams, vehicleType = NULL,
   vehicleDescription = NULL, vehicleLicensePlate = NULL,
   vehicleColor = NULL, capacity = NULL)
 
-onfleet_get_workers()
+onfleet_get_workers(states)
 
 onfleet_get_workers_by_location(long, lat, radius)
 

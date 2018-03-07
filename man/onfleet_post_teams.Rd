@@ -8,7 +8,7 @@
 \alias{onfleet_delete_teams}
 \title{Manage Teams}
 \usage{
-onfleet_post_teams(name, workers, managers, hub = NULL)
+onfleet_post_teams(name, workers = list(), managers = list(), hub = NULL)
 
 onfleet_put_teams(id, ...)
 

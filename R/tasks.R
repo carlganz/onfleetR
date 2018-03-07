@@ -22,14 +22,16 @@ onfleet_post_tasks <- function(merchant = NULL, executor = NULL, destination, re
                                containerType= NULL, containerTeam= NULL, containerWorker= NULL,
                                quantity= NULL, serviceTime= NULL) {
   
-  onfleet_call("POST", "tasks", body = list(
+  body <- list(
     container = if (!is.null(containerType)) list(type = containerType, team = containerTeam, worker = containerWorker),
     autoAssign = if (!is.null(autoAssignMode)) list(mode = autoAssignMode, team = autoAssignTeam, maxAssignedTaskCount = autoAssignMaxAssignedTaskCount,
-                      considerDependencies = autoAssignConsiderDependencies, excludeWorkerIds = autoAssignExcludedWorkerIds),
+                                                    considerDependencies = autoAssignConsiderDependencies, excludeWorkerIds = autoAssignExcludedWorkerIds),
     merchant = merchant, executor = executor, destination = destination, recipients = recipients,
     completeAfter = completeAfter, completeBefore = completeBefore, pickupTask = pickupTask, 
     dependencies = dependencies, notes = notes, quantity = quantity, serviceTime = serviceTime
-  ))
+  )
+  
+  onfleet_call("POST", "tasks", body = shiny:::dropNullsOrEmpty(body))
   
 }
 
@@ -38,7 +40,8 @@ onfleet_post_tasks <- function(merchant = NULL, executor = NULL, destination, re
 onfleet_get_tasks <- function(from, to = NULL, lastId = NULL, state = NULL, worker = NULL, completeBeforeBefore = NULL,
                               completeAfterAfter = NULL) {
   onfleet_call("GET", "tasks/all", query = list(
-    from = as.numeric(as.POSIXct(from))*1000, to = if (!is.null(to)) as.numeric(as.POSIXct(to))*1000, lastId = lastId, state = state, worker = worker, 
+    from = as.numeric(as.POSIXct(from))*1000, to = if (!is.null(to)) as.numeric(as.POSIXct(to))*1000, lastId = lastId, state = if (isTruthy(state)) paste0(state, collapse = ","), 
+    worker = worker, 
     completeBeforeBefore = completeBeforeBefore,
     completeAfterAfter = completeAfterAfter
   ))

@@ -9,14 +9,17 @@
 \alias{onfleet_delete_task}
 \title{Manage Tasks}
 \usage{
-onfleet_post_tasks(merchant, executor, destination, recipients, completeAfter,
-  completeBefore, pickupTask, dependencies, notes, autoAssignMode,
-  autoAssignTeam, autoAssignMaxAssignedTaskCount,
-  autoAssignConsiderDependencies, autoAssignExcludedWorkerIds, containerType,
-  containerTeam, containerWorker, quantity, serviceTime)
+onfleet_post_tasks(merchant = NULL, executor = NULL, destination,
+  recipients, completeAfter = NULL, completeBefore = NULL,
+  pickupTask = NULL, dependencies = NULL, notes = NULL,
+  autoAssignMode = NULL, autoAssignTeam = NULL,
+  autoAssignMaxAssignedTaskCount = NULL,
+  autoAssignConsiderDependencie = NULLs, autoAssignExcludedWorkerIds = NULL,
+  containerType = NULL, containerTeam = NULL, containerWorker = NULL,
+  quantity = NULL, serviceTime = NULL)
 
-onfleet_get_tasks(from, to, lastId, state, worker, completeBeforeBefore,
-  completeAfterAfter)
+onfleet_get_tasks(from, to = NULL, lastId = NULL, state = NULL,
+  worker = NULL, completeBeforeBefore = NULL, completeAfterAfter = NULL)
 
 onfleet_get_task(id)
 
