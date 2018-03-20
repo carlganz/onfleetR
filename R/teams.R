@@ -22,9 +22,14 @@ onfleet_put_teams <- function(id, ...) {
 #' @rdname onfleet_post_teams
 #' @export
 onfleet_get_teams <- function() {
-  onfleet_call("GET", "teams") %>%
-    map(shiny:::dropNullsOrEmpty) %>%
-    bind_rows()
+  onfleet_call("GET", "teams") %>% {
+    tibble(
+      id = map_chr(., "id"),
+      timeCreated = map_dbl(., "timeCreated"),
+      name = map_chr(., "name"),
+      workers = list(map(., "workers"))
+    )
+  }
 }
 
 #' @rdname onfleet_post_teams

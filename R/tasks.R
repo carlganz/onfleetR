@@ -40,11 +40,23 @@ onfleet_post_tasks <- function(merchant = NULL, executor = NULL, destination, re
 onfleet_get_tasks <- function(from, to = NULL, lastId = NULL, state = NULL, worker = NULL, completeBeforeBefore = NULL,
                               completeAfterAfter = NULL) {
   onfleet_call("GET", "tasks/all", query = list(
-    from = as.numeric(as.POSIXct(from))*1000, to = if (!is.null(to)) as.numeric(as.POSIXct(to))*1000, lastId = lastId, state = if (isTruthy(state)) paste0(state, collapse = ","), 
+    from = format(as.numeric(as.POSIXct(from))*1000, scientific = FALSE), to = if (!is.null(to)) format(as.numeric(as.POSIXct(to))*1000, scientific = FALSE), 
+    lastId = lastId, state = if (isTruthy(state)) paste0(state, collapse = ","), 
     worker = worker, 
     completeBeforeBefore = completeBeforeBefore,
     completeAfterAfter = completeAfterAfter
-  ))
+  ))[[1]] %>% {
+    tibble(
+      id = map_chr(.,"id"),
+      timeCreated = map_dbl(.,"timeCreated"),
+      worker = map_chr(.,"worker", .null = NA_character_),
+      state = map_int(.,"state"),
+      completionDetails = map(.,"completionDetails"),
+      recipientName = map(., "recipients") %>% map(1) %>% map_chr("name"),
+      recipientPhone = map(., "recipients") %>% map(1) %>% map_chr("phone"),
+      location = map(., "destination")
+    )
+  }
 }
 
 #' @rdname onfleet_post_tasks

@@ -21,13 +21,14 @@ onfleet_post_workers <- function(name, phone, teams, vehicleType = NULL, vehicle
 
 #' @rdname onfleet_post_workers
 #' @export
-onfleet_get_workers <- function(states) {
-  onfleet_call("GET", "workers", query = if (isTruthy(states)) list(states = paste0(states, collapse = ","))) %>% {
-    data.frame(
+onfleet_get_workers <- function(states = NULL) {
+  onfleet_call("GET", "workers", query = if (shiny::isTruthy(states)) list(states = paste0(states, collapse = ","))) %>% {
+    tibble(
       id = map_chr(., "id"),
       name = map_chr(.,"name"),
       phone = map_chr(., "phone"),
-      onDuty = map_lgl(., "onDuty")
+      onDuty = map_lgl(., "onDuty"),
+      location = list(map(., "location"))
     )
   }
 }
